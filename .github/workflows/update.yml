@@ -1,0 +1,42 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Docs Update
+
+on:
+  push:
+    branches: [master, newgen]
+
+jobs:
+  Update:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2.3.2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2.1.1
+        with:
+          node-version: 14.x
+      - uses: actions/cache@v2.1.0
+        with:
+          path: ~/workspace/.pnpm-store
+          key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Update
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ ! $(git rev-parse HEAD) = $(cat docs/current-commit) ] ; then
+            npm install -g pnpm
+            pnpm i
+            pnpm run build
+            git rev-parse HEAD > docs/current-commit
+            git config --global user.email "$(curl -s -H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/users/${GITHUB_ACTOR}|jq -r .email)"
+            git config --global user.name "${GITHUB_ACTOR}"
+            git add -A
+            git commit --amend --no-edit --allow-empty
+            git remote set-url origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_ACTOR}/webui-aria2.git
+            git push --force
+          else
+            echo 'Do nothing'
+          fi

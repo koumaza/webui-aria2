@@ -1,0 +1,39 @@
+{
+  "name": "Aria2-WebUI-Electron",
+  "version": "1.0.0",
+  "description": "Aria2-WebUI on Electron",
+  "main": "index.js",
+  "scripts": {
+    "build": "node ./node_modules/electron-builder/out/cli/cli.js -wl --x64 --arm64"
+  },
+  "author": "koumaza <koumaza--@outlook.com>",
+  "license": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/koumaza/webui-aria2-electron.git"
+  },
+  "build": {
+    "appId": "com.webui-aria2.electron.app",
+    "directories": {
+      "output": "./artifact"
+    },
+    "win": {
+      "icon": "icon/310x310.ico",
+      "target": "nsis"
+    },
+    "linux": {
+      "icon": "icon/",
+      "target": [
+        "deb",
+        "rpm",
+        "pacman"
+      ],
+      "category": "Network"
+    }
+  },
+  "dependencies": {
+    "asar": "^3.0.3",
+    "electron": "^11.0.0-beta.8",
+    "electron-builder": "^22.8.1"
+  }
+}

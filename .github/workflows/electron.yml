@@ -1,0 +1,47 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Release
+
+on:
+  push:
+    branches: [master, newgen]
+
+jobs:
+  Build:
+    container: electronuserland/builder:wine
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2.3.2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2.1.1
+        with:
+          node-version: 14.x
+      - uses: actions/cache@v2.1.0
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      #- name: Setup tmate session
+      #  uses: mxschmitt/action-tmate@v2
+      - name: Release
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          rm -rf ~/.wine && mkdir -p ../.wine
+          export WINEPREFIX=$(readlink -f $PWD/../.wine)
+          winecfg
+          curl -sL https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+          NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/rc/ nvm i node
+          export orig_pwd=$PWD
+          npm install -g pnpm
+          pnpm install -r
+          pnpm run build && pnpm run format
+          cd electron/
+          pnpm run build
+          node ./node_modules/electron-builder/out/cli/cli.js -wl --x64 --arm64
+          ls
