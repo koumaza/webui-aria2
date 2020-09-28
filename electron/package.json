@@ -22,18 +22,17 @@
       "target": "nsis"
     },
     "linux": {
-      "icon": "icon/",
+      "icon": "icon/310x310.png",
       "target": [
         "deb",
-        "rpm",
         "pacman"
       ],
       "category": "Network"
     }
   },
-  "dependencies": {
+  "devDependencies": {
     "asar": "^3.0.3",
-    "electron": "^11.0.0-beta.8",
-    "electron-builder": "^22.8.1"
+    "electron": "^10.1.2",
+    "electron-builder": "22.8.1"
   }
 }

@@ -5,10 +5,13 @@ name: Release
 
 on:
   push:
-    branches: [master, newgen]
+    branches:
+      - "!master"
+    tags:
+      - "*"
 
 jobs:
-  Build:
+  Release:
     container: electronuserland/builder:wine
     runs-on: ubuntu-20.04
     steps:
@@ -23,20 +26,15 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-      #- name: Setup tmate session
-      #  uses: mxschmitt/action-tmate@v2
-      - name: Release
+      - name: Build
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          : git symbolic-ref -q --short HEAD || : git describe --tags --exact-match
           rm -rf ~/.wine && mkdir -p ../.wine
           export WINEPREFIX=$(readlink -f $PWD/../.wine)
           winecfg
-          curl -sL https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-          NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/rc/ nvm i node
           export orig_pwd=$PWD
           npm install -g pnpm
           pnpm install -r
@@ -44,4 +42,19 @@ jobs:
           cd electron/
           pnpm run build
           node ./node_modules/electron-builder/out/cli/cli.js -wl --x64 --arm64
-          ls
+          mv electron/artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe electron/artifact/Aria2-WebUI-Electron-Setup-*.*.*.exe
+          mv electron/artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe.blockmap electron/artifact/Aria2-WebUI-Electron-Setup-*.*.*.exe.blockmap
+      - name: Upload Release
+        uses: softprops/action-gh-release@master
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            electron/artifact/Aria2-WebUI-Electron-Setup-*.*.*.exe
+            electron/artifact/Aria2-WebUI-Electron-Setup-*.*.*.exe.blockmap
+            electron/artifact/Aria2-WebUI-Electron-*.*.*-arm64.pacman
+            electron/artifact/Aria2-WebUI-Electron-*.*.*.pacman
+            electron/artifact/Aria2-WebUI-Electron_*.*.*_amd64.deb
+            electron/artifact/Aria2-WebUI-Electron_*.*.*_arm64.deb
+            electron/artifact/latest.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
