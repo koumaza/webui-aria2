@@ -18,7 +18,7 @@
       "output": "./artifact"
     },
     "nsis": {
-      "createStartMenuShortcut": true,
+      "createStartMenuShortcut": true
     },
     "asar": true,
     "win": {
