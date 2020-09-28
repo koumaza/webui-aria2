@@ -18,10 +18,12 @@
       "output": "./artifact"
     },
     "win": {
+      "title" : "Aria2-WebUI-Electron",
       "icon": "icon/310x310.ico",
       "target": "nsis"
     },
     "linux": {
+      "title" : "Aria2-WebUI-Electron",
       "icon": "icon/310x310.png",
       "target": [
         "deb",
