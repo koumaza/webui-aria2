@@ -39,6 +39,7 @@ jobs:
           npm install -g pnpm
           pnpm install -r
           pnpm run build && pnpm run format
+          cp -r docs/ electron/
           cd electron/
           pnpm run build
           node ./node_modules/electron-builder/out/cli/cli.js -wl --x64 --arm64
