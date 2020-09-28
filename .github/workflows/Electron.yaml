@@ -43,8 +43,8 @@ jobs:
           cd electron/
           pnpm run build
           node ./node_modules/electron-builder/out/cli/cli.js -wl --x64 --arm64
-          mv artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe          artifact/$(ls artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe | tr ' ' -)
-          mv artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe.blockmap artifact/$(ls artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe.blockmap | tr ' ' -)
+          mv artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe          $(ls artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe | tr ' ' -)
+          mv artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe.blockmap $(ls artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe.blockmap | tr ' ' -)
           cd artifact/
           tar -acvf win-portable.tar.zst win-unpacked/*
           tar -acvf linux-portable.tar.zst linux-unpacked/*
