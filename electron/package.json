@@ -18,8 +18,11 @@
       "output": "./artifact"
     },
     "nsis": {
+      "include": "docs/",
       "createStartMenuShortcut": true,
-      "runAfterFinish": true
+      "runAfterFinish": true,
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
     },
     "asar": true,
     "win": {
@@ -28,7 +31,6 @@
       "target": "nsis"
     },
     "linux": {
-      "title" : "Aria2-WebUI-Electron",
       "icon": "icon/310x310.png",
       "target": [
         "deb",
