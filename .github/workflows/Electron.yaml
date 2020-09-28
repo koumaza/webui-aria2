@@ -45,11 +45,20 @@ jobs:
           node ./node_modules/electron-builder/out/cli/cli.js -wl --x64 --arm64
           mv artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe          artifact/$(ls artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe | tr ' ' -)
           mv artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe.blockmap artifact/$(ls artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe.blockmap | tr ' ' -)
+          cd artifact/
+          tar -acvf win-portable.tar.zst win-unpacked/*
+          tar -acvf linux-portable.tar.zst linux-unpacked/*
+          tar -acvf win-arm64-portable.tar.zst win-arm64-unpacked/*
+          tar -acvf linux-arm64-portable.tar.zst linux-arm64-unpacked/*
       - name: Upload Release
         uses: softprops/action-gh-release@master
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
+            electron/artifact/win-portable.tar.zst
+            electron/artifact/linux-portable.tar.zst
+            electron/artifact/win-arm64-portable.tar.zst
+            electron/artifact/linux-arm64-portable.tar.zst
             electron/artifact/Aria2-WebUI-Electron-Setup-*.*.*.exe
             electron/artifact/Aria2-WebUI-Electron-Setup-*.*.*.exe.blockmap
             electron/artifact/Aria2-WebUI-Electron-*.*.*-arm64.pacman
