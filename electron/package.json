@@ -18,11 +18,7 @@
       "output": "./artifact"
     },
     "nsis": {
-      "include": "docs/",
       "createStartMenuShortcut": true,
-      "runAfterFinish": true,
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
     },
     "asar": true,
     "win": {
