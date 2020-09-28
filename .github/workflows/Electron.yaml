@@ -42,8 +42,8 @@ jobs:
           cd electron/
           pnpm run build
           node ./node_modules/electron-builder/out/cli/cli.js -wl --x64 --arm64
-          mv artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe          artifact/Aria2-WebUI-Electron-Setup-*.*.*.exe
-          mv artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe.blockmap artifact/Aria2-WebUI-Electron-Setup-*.*.*.exe.blockmap
+          mv artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe          artifact/$(ls artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe | tr ' ' -)
+          mv artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe.blockmap artifact/$(ls artifact/Aria2-WebUI-Electron\ Setup\ *.*.*.exe.blockmap | tr ' ' -)
       - name: Upload Release
         uses: softprops/action-gh-release@master
         if: startsWith(github.ref, 'refs/tags/')
