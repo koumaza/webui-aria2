@@ -17,6 +17,11 @@
     "directories": {
       "output": "./artifact"
     },
+    "nsis": {
+      "createStartMenuShortcut": true,
+      "runAfterFinish": true
+    },
+    "asar": true,
     "win": {
       "title" : "Aria2-WebUI-Electron",
       "icon": "icon/310x310.ico",
