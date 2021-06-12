@@ -2,9 +2,11 @@
   "name": "Aria2-WebUI-Electron",
   "version": "1.0.0",
   "description": "Aria2-WebUI on Electron",
-  "main": "index.js",
   "scripts": {
-    "build": "node ./node_modules/electron-builder/out/cli/cli.js -wl --x64 --arm64"
+    "dep": "npx pnpm i --no-lockfile",
+    "watch": "tsc -w",
+    "build": "tsc && npx electron-builder -wl --x64 --arm64",
+    "start": "tsc && electron ./dist/main.js"
   },
   "author": "koumaza <koumaza--@outlook.com>",
   "license": "",
@@ -35,8 +37,9 @@
     }
   },
   "devDependencies": {
-    "asar": "^3.0.3",
-    "electron": "^10.1.2",
-    "electron-builder": "22.8.1"
+    "typescript": "next",
+    "asar": "latest",
+    "electron": "beta",
+    "electron-builder": "next"
   }
 }

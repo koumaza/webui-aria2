@@ -15,6 +15,7 @@
     "last 2 versions"
   ],
   "scripts": {
+    "dep": "npx pnpm i --no-lockfile",
     "dev": "webpack -d --watch --progress & node node-server",
     "build": "webpack -p --progress",
     "analyze": "webpack -p --profile --json > stats.json && webpack-bundle-analyzer stats.json ./docs -p 9999",
@@ -33,31 +34,31 @@
     }
   },
   "dependencies": {
-    "angular": "^1.8.0",
-    "angular-translate": "^2.18.3",
-    "autoprefixer": "^10.0.0",
-    "bootstrap-sass": "^3.4.1",
-    "clean-webpack-plugin": "^3.0.0",
-    "css-loader": "^4.3.0",
-    "electron-builder": "^22.8.1",
-    "file-loader": "^6.1.0",
-    "flag-icon-css": "^3.5.0",
-    "html-webpack-plugin": "^4.5.0",
-    "jquery": "^3.5.1",
-    "lodash": "^4.17.20",
-    "mini-css-extract-plugin": "^0.11.2",
-    "node-sass": "^4.14.1",
-    "postcss": "^8.0.9",
-    "postcss-loader": "^4.0.2",
-    "sass-loader": "^10.0.2",
-    "webpack": "^4.44.2",
-    "webpack-bundle-analyzer": "^3.9.0",
-    "webpack-cli": "^3.3.12",
-    "workbox-webpack-plugin": "^5.1.4"
+    "angular": "latest",
+    "angular-translate": "latest",
+    "autoprefixer": "latest",
+    "bootstrap-sass": "latest",
+    "clean-webpack-plugin": "latest",
+    "css-loader": "latest",
+    "electron-builder": "next",
+    "file-loader": "latest",
+    "flag-icon-css": "latest",
+    "html-webpack-plugin": "latest",
+    "jquery": "beta",
+    "lodash": "latest",
+    "mini-css-extract-plugin": "latest",
+    "sass": "latest",
+    "postcss": "latest",
+    "postcss-loader": "latest",
+    "sass-loader": "latest",
+    "webpack": "latest",
+    "webpack-bundle-analyzer": "latest",
+    "webpack-cli": "latest",
+    "workbox-webpack-plugin": "latest"
   },
   "devDependencies": {
-    "husky": "^4.3.0",
-    "prettier": "2.1.2",
-    "pretty-quick": "^3.0.2"
+    "husky": "latest",
+    "prettier": "latest",
+    "pretty-quick": "latest"
   }
 }
