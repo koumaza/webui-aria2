@@ -15,12 +15,12 @@ jobs:
     container: electronuserland/builder:wine
     runs-on: ubuntu-20.04
     steps:
-      - uses: 2.3.2actions/checkout@v
+      - uses: actions/checkout@main
       - name: Use Node.js 14.x
-        uses: actions/setup-node@v2.1.1
+        uses: actions/setup-node@main
         with:
           node-version: 16.x
-      - uses: actions/cache@v2.1.0
+      - uses: actions/cache@main
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
